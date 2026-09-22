@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c090b">
+  <title>Lúcifer — A Brazilian Computer Prank, Reborn | Tony Schaffert</title>
+  <meta name="description" content="Play Tony Schaffert’s browser recreation of Lúcifer, the classic hidden-answer computer prank. Tony created a version in Brazil. Play in English or Portuguese.">
+  <link rel="canonical" href="https://tonyschaffert.com/lucifer/">
+  <meta property="og:type" content="website"><meta property="og:title" content="Lúcifer — The terminal is listening">
+  <meta property="og:description" content="A classic computer prank, rebuilt by Tony Schaffert, who created a version in Brazil. English and Portuguese. No download required.">
+  <meta property="og:url" content="https://tonyschaffert.com/lucifer/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/lucifer/game.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Lúcifer","url":"https://tonyschaffert.com/lucifer/","description":"A browser recreation of the classic hidden-answer computer prank by Tony Schaffert, who created a version in Brazil.","author":{"@type":"Person","name":"Tony Schaffert","url":"https://tonyschaffert.com/"},"gamePlatform":"Web browser","inLanguage":["en","pt-BR"],"genre":"Party game"}</script>
+  <script type="module" src="/lucifer/game.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#game" data-i18n="skip">Skip to game</a>
+  <header class="topbar"><a href="/" class="home-link"><span aria-hidden="true">←</span> <span data-i18n="back">Tony Schaffert</span></a><div class="top-controls"><label class="sr-only" for="language" data-i18n="language">Language</label><select id="language"><option value="en">EN</option><option value="pt-BR">PT-BR</option></select><button type="button" id="guide-open" data-i18n="guideButton">Operator guide</button></div></header>
+  <main>
+    <div class="intro"><p class="eyebrow" data-i18n="eyebrow">FROM THE DAYS OF DOS. BACK FROM THE DARK.</p><div class="title-row"><h1>Lúcifer<span aria-hidden="true">_</span></h1><span class="edition" data-i18n="edition">BROWSER<br>EDITION / 01</span></div><p class="lead" data-i18n="lead">Some questions are better left unasked.</p></div>
+    <section class="terminal" id="game" aria-label="Lúcifer game">
+      <div class="terminal-bar"><span class="terminal-name">LUCIFER.EXE</span><span id="connection" data-i18n="connection">SESSION OPEN</span></div>
+      <div class="terminal-body">
+        <p class="welcome" data-i18n="welcome">The terminal is listening. Address it, then ask your question.</p>
+        <form id="ritual" autocomplete="off">
+          <label for="petition"><span class="step">01</span><span data-i18n="petitionLabel">The invocation</span></label>
+          <div class="petition-wrap"><textarea id="petition" rows="2" maxlength="400" required spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-describedby="petition-hint" placeholder="Lucifer, please answer my question."></textarea><div id="composition-cover" aria-hidden="true" hidden></div></div>
+          <p class="field-hint" id="petition-hint" data-i18n="petitionHint">Begin with “Lucifer, please answer my question.”</p>
+          <label for="question"><span class="step">02</span><span data-i18n="questionLabel">Your question</span></label>
+          <input id="question" type="text" maxlength="240" required autocomplete="off" placeholder="Who is in the room with me?">
+          <div class="actions"><button class="summon" type="submit" id="summon"><span data-i18n="summon">Ask Lúcifer</span><span aria-hidden="true">↗</span></button><button class="reset" id="reset" type="button" data-i18n="reset">New session</button></div>
+        </form>
+        <section class="response" id="response" aria-labelledby="response-label" hidden><p class="response-label" id="response-label" data-i18n="responseLabel">TRANSMISSION RECEIVED</p><p id="answer" role="status" aria-live="polite" aria-atomic="true"></p></section>
+        <p id="error" class="error" role="alert"></p>
+        <noscript><p class="error">Enable JavaScript to play. Ative o JavaScript para jogar.</p></noscript>
+      </div>
+      <div class="terminal-footer"><span data-i18n="footerLeft">ONE TERMINAL. MANY SECRETS.</span><span aria-hidden="true">[ _ ]</span></div>
+    </section>
+    <section class="origin"><p class="eyebrow" data-i18n="originLabel">A PIECE OF MY HISTORY</p><p data-i18n="origin">I created a version of Lúcifer in Brazil. This is my browser recreation of that old computer prank — a little nostalgia, a little theater, and a lot of fun with friends.</p><span class="signature">— Tony Schaffert</span></section>
+    <footer class="page-footer"><a href="/" data-i18n="portfolio">Back to my universe ↗</a><span data-i18n="disclaimer">A theatrical party trick. No supernatural powers.</span></footer>
+  </main>
+  <dialog id="guide" aria-labelledby="guide-title"><div class="guide-header"><p class="eyebrow" data-i18n="guideEyebrow">BEHIND THE CURTAIN</p><button type="button" id="guide-close" aria-label="Close guide">✕</button></div><h2 id="guide-title" data-i18n="guideTitle">You are the secret.</h2><p data-i18n="guideIntro">Read this before inviting your audience. The operator supplies the answer; the invocation hides what they type.</p><ol><li data-i18n="instruction1">Start a new session. In the invocation field, type a semicolon (;) to begin the hidden answer.</li><li data-i18n="instruction2">Type the answer you want Lúcifer to give. Your audience sees the invocation appear instead. Backspace corrects your hidden answer.</li><li data-i18n="instruction3">Type another semicolon (;) or press Enter to seal it. The invocation completes. Then type the question in the second field.</li><li data-i18n="instruction4">Choose “Ask Lúcifer.” After a short pause, your answer appears. “New session” clears everything for the next round.</li></ol><div class="example"><p data-i18n="exampleTitle">TRY THIS</p><code id="example-code">;You are wearing blue.;</code><p data-i18n="exampleQuestion">Then ask: “What color am I wearing?”</p></div><p class="guide-note" data-i18n="guideNote">Without a hidden answer, Lúcifer gives a mysterious stock reply. Nothing you type is sent to a server or saved. Keep it playful with people who enjoy the joke.</p><button type="button" id="rehearse" class="summon" data-i18n="rehearse">Load a practice round</button><p class="practice-note" data-i18n="practiceNote">Loads the example answer and question so you can try the reveal.</p></dialog>
+</body>
+</html>

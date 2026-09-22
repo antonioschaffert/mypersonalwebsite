@@ -16,7 +16,7 @@ No dependencies, build step, environment variables, or paid services are require
 
 The site includes HTML content, a canonical URL, title and description, Open Graph / X text metadata, Person / WebSite / ItemList JSON-LD, `robots.txt`, and `sitemap.xml`. Search engines can index the public site after deployment; indexing and rankings are not guaranteed. Once live, submit `https://tonyschaffert.com/sitemap.xml` through Google Search Console.
 
-On-site search in `dist/script.js` searches the three projects and Tony’s biography. It supports multiple search terms, keyboard opening, Escape to close, and a no-results state.
+On-site search in `dist/script.js` searches the apps, Lúcifer game, and Tony’s biography. It supports multiple search terms, keyboard opening, Escape to close, and a no-results state.
 
 ## Edit content
 
@@ -49,3 +49,23 @@ Retrieved September 21, 2026 from Apple’s App Store listings and verified agai
 - [Devprompt](https://apps.apple.com/us/app/devprompt/id6809673786): Today and question detail screens.
 
 The screenshots were resized to 642 × 1389 and converted to WebP for loading performance; their content was not altered. These are app screenshots, not generated mockups.
+
+
+## Lúcifer browser game
+
+Play at `/lucifer/`. The home page features the game and on-site search links directly to it. Tony created a version of Lúcifer in Brazil; this is a new browser recreation, not a claim to have originated all versions of the historical program.
+
+- English and Brazilian Portuguese, with browser-language detection and a manual selector.
+- In the invocation field, type `;`, your hidden answer, then another `;` (or Enter). The audience sees an invocation instead. Then enter the question and ask Lúcifer.
+- Backspace edits the hidden answer; pasted sequences and accented characters work. Sealing the answer completes and locks the invocation until the next session.
+- An operator guide includes a practice round. Without a hidden answer, the game uses a theatrical stock response.
+- A short reveal delay, reset controls, reduced-motion support, accessible labels, and a live answer announcement.
+- Answers are kept only in the current page’s memory. No API, browser storage, cookies, or analytics receives questions or answers. Reset, language changes, and leaving the page clear the round.
+
+Source: `dist/lucifer/index.html`, `game.css`, `game.mjs`, and `engine.mjs`. The game is standalone static content and uses the existing Netlify configuration.
+
+Run the core behavior checks with:
+
+```sh
+node --test tests/lucifer*.test.mjs
+```
