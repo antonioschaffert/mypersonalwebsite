@@ -1,8 +1,9 @@
 const searchItems = [
   {title:'Dad Jokes Vault',description:'A little humor, a lot of dad energy. Explore the project.',href:'#dad-jokes-vault',keywords:'dad father jokes humor funny comedy software work project'},
-  {title:'Total Chaos',description:'One of Tony’s personal projects. A little wild by design.',href:'#total-chaos',keywords:'total chaos project work experiment building'},
-  {title:'Devprompt',description:'An idea brought to life through code.',href:'#devprompt',keywords:'devprompt dev prompt developer software project code work'},
-  {title:'The human behind the code',description:'Meet Tony: developer, family man, and father of two.',href:'#about',keywords:'about tony schaffert family father dad two kids children biography human developing'},
+  {title:'Total Chaos',description:'Party games and trivia for friends and family. Available for iPhone.',href:'#total-chaos',keywords:'total chaos project work app store iphone ios trivia games friends family party most likely'},
+  {title:'Devprompt',description:'Daily developer questions and explanations that help you keep learning.',href:'#devprompt',keywords:'devprompt dev prompt developer software project code work app store iphone ios learning education questions knowledge'},
+  {title:'The human behind the code',description:'Florida-based developer, Purdue Boilermaker grad, and father of two.',href:'#about',keywords:'about tony schaffert family father dad two kids children biography human developing purdue boilermaker graduate grad university florida education home location'},
+  {title:'while(alive) { keepLearning() }',description:'Stay curious. Keep building. Never stop learning.',href:'#keep-learning',keywords:'slogan motto learning learn alive curiosity philosophy'},
   {title:'Things I’ve built',description:'Explore all three featured projects.',href:'#work',keywords:'portfolio work projects developing software things built'}
 ];
 const dialog = document.querySelector('#site-search');

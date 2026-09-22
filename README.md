@@ -1,6 +1,6 @@
 # Tony Schaffert
 
-A personal website for **tonyschaffert.com**. Developer, family man, father of two.
+A personal website for **tonyschaffert.com**. Developer, Purdue Boilermaker grad, Florida resident, and father of two.
 
 Dark editorial design with an original orange and violet orbital hero, project showcases, responsive layouts, and accessible native-dialog search (⌘K / Ctrl K). All core content is readable without JavaScript.
 
@@ -25,7 +25,9 @@ On-site search in `dist/script.js` searches the three projects and Tony’s biog
 - `dist/script.js`: local search index and interactions.
 - `dist/assets/orbit-hero.webp`: original generated hero artwork.
 
-Project URLs and contact details have not been supplied. Project cards currently offer expandable introductions; replace these with live links when the destinations are confirmed. The project copy intentionally does not claim unverified features or metrics.
+Total Chaos and Devprompt use verified App Store links and actual listing screenshots, stored locally as optimized WebP images. Each screenshot opens at a larger size. Dad Jokes Vault remains a project introduction because no matching App Store listing was found under Antonio Schaffert. Contact details have not been supplied.
+
+The biography, search index, and structured metadata include Purdue University and Florida. The closing motto is `while(alive) { keepLearning() }`.
 
 ## Local preview
 
@@ -38,3 +40,12 @@ Open `http://localhost:4173`. JavaScript syntax can be checked with `node --chec
 ## Artwork
 
 Created using the built-in image generation tool. Prompt: “A single glossy translucent molten-orange and violet glass twisted torus with thin iridescent chrome edges, floating in near-black space. Premium experimental developer-brand 3D art. Landscape 1536×1024, sculpture in the right two thirds, dark negative space on the left. No text, logos, stars, or interface.”
+
+## App Store screenshot sources
+
+Retrieved September 21, 2026 from Apple’s App Store listings and verified against the listed developer, **Antonio Schaffert**:
+
+- [Total Chaos](https://apps.apple.com/us/app/total-chaos/id6760237060): home and live trivia question screens.
+- [Devprompt](https://apps.apple.com/us/app/devprompt/id6809673786): Today and question detail screens.
+
+The screenshots were resized to 642 × 1389 and converted to WebP for loading performance; their content was not altered. These are app screenshots, not generated mockups.
