@@ -2,7 +2,7 @@
 
 A personal website for **tonyschaffert.com**. Developer, Purdue Boilermaker grad, Florida resident, and father of two.
 
-Dark editorial design with an original orange and violet orbital hero, project showcases, responsive layouts, and accessible native-dialog search (⌘K / Ctrl K). All core content is readable without JavaScript.
+Dark editorial design with an original orange and violet solar-wind hero, project showcases, responsive layouts, and accessible native-dialog search (⌘K / Ctrl K). All core content is readable without JavaScript.
 
 ## Deploy on Netlify
 
@@ -23,7 +23,7 @@ On-site search in `dist/script.js` searches the apps, Lúcifer game, and Tony’
 - `dist/index.html`: biography, project descriptions, metadata, structured data.
 - `dist/style.css`: responsive visual design.
 - `dist/script.js`: local search index and interactions.
-- `dist/assets/orbit-hero.webp`: original generated hero artwork.
+- `dist/assets/solar-wind-hero.webp`: original generated hero artwork.
 
 Total Chaos and Devprompt use verified App Store links and actual listing screenshots, stored locally as optimized WebP images. Each screenshot opens at a larger size. Dad Jokes Vault remains a project introduction because no matching App Store listing was found under Antonio Schaffert. Contact details have not been supplied.
 
@@ -39,7 +39,7 @@ Open `http://localhost:4173`. JavaScript syntax can be checked with `node --chec
 
 ## Artwork
 
-Created using the built-in image generation tool. Prompt: “A single glossy translucent molten-orange and violet glass twisted torus with thin iridescent chrome edges, floating in near-black space. Premium experimental developer-brand 3D art. Landscape 1536×1024, sculpture in the right two thirds, dark negative space on the left. No text, logos, stars, or interface.”
+Created using the built-in image generation tool. Prompt: “Cinematic abstract solar wind: thousands of fine luminous orange/coral filaments and restrained violet/indigo particles sweep diagonally through near-black space. Crisp strands, restrained bloom, sculptural depth. Landscape 1536×1024; energy in the right two thirds, dark left third for the headline. No torus, rings, glass, solid sculpture, text, logos, or interface.”
 
 ## App Store screenshot sources
 
@@ -56,8 +56,8 @@ The screenshots were resized to 642 × 1389 and converted to WebP for loading pe
 Play at `/lucifer/`. The home page features the game and on-site search links directly to it. Tony created a version of Lúcifer in Brazil; this is a new browser recreation, not a claim to have originated all versions of the historical program.
 
 - English and Brazilian Portuguese, with browser-language detection and a manual selector.
-- In the invocation field, type `;`, your hidden answer, then another `;` (or Enter). The audience sees an invocation instead. Then enter the question and ask Lúcifer.
-- Backspace edits the hidden answer; pasted sequences and accented characters work. Sealing the answer completes and locks the invocation until the next session.
+- Use the single message box: type `;your hidden answer;Your question?`. The hidden answer is masked as an invocation, then the question follows in the same field. Enter closes hidden entry; Enter again submits the completed message.
+- Backspace edits the hidden answer; pasted sequences and accented characters work. Finishing the hidden answer completes the invocation and lets you continue typing the question. The question can be edited without changing the hidden answer. Clearing the entire box also clears the secret.
 - An operator guide includes a practice round. Without a hidden answer, the game uses a theatrical stock response.
 - A short reveal delay, reset controls, reduced-motion support, accessible labels, and a live answer announcement.
 - Answers are kept only in the current page’s memory. No API, browser storage, cookies, or analytics receives questions or answers. Reset, language changes, and leaving the page clear the round.
@@ -69,3 +69,5 @@ Run the core behavior checks with:
 ```sh
 node --test tests/lucifer*.test.mjs
 ```
+
+Arrow controls use inline SVG paths rather than font glyphs, avoiding platform-specific emoji and font rendering.

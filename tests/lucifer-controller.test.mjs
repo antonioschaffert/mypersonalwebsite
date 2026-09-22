@@ -11,6 +11,7 @@ class Element {
   focus(){document.activeElement=this;}
   setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}
   setAttribute(k,v){this.attributes[k]=v;}
+  requestSubmit(){this.emit('submit');}
   showModal(){this.open=true;}
   close(){this.open=false;this.emit('close');}
 }
@@ -30,17 +31,22 @@ test('real controller: typing, safe reveal, pending reset, language switch, fall
     const finish=()=>{for(const [id,fn] of [...scheduled]){scheduled.delete(id);fn();}};
     get('language').value='en';get('language').emit('change');
     for(const node of labels)assert.equal(typeof node.textContent,'string',`Missing translation ${node.dataset.i18n}`);
-    type(';A blue shirt;');assert.equal(petition.value,'Lucifer, please answer my question.');assert.equal(petition.readOnly,true);
-    get('question').value='What am I wearing?';get('ritual').emit('submit');assert.equal(get('summon').disabled,true);assert.ok(!get('answer').textContent.includes('blue'));
+    type(';A blue shirt;');assert.equal(petition.value,'Lucifer, please answer my question. ');assert.equal(petition.readOnly,false);assert.ok(!nodes.has('#question'));
+    type('What am I wearing?');get('ritual').emit('submit');assert.equal(get('summon').disabled,true);assert.ok(!get('answer').textContent.includes('blue'));
     finish();assert.equal(get('answer').textContent,'A blue shirt');
     get('reset').emit('click');assert.equal(petition.value,'');assert.equal(get('answer').textContent,'');assert.equal(get('response').hidden,true);
-    type(';Should never appear;');get('question').value='Who?';get('ritual').emit('submit');get('reset').emit('click');finish();assert.equal(get('answer').textContent,'');
+    type(';Should never appear;');type('Who?');get('ritual').emit('submit');get('reset').emit('click');finish();assert.equal(get('answer').textContent,'');
     get('language').value='pt-BR';get('language').emit('change');assert.equal(document.documentElement.lang,'pt-BR');
-    get('rehearse').emit('click');assert.equal(get('question').value,'Qual é a cor da minha roupa?');get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Você está vestindo azul.');
-    get('reset').emit('click');type('Uma invocação normal');get('question').value='Quem?';get('ritual').emit('submit');finish();assert.ok(get('answer').textContent.length>0);assert.notEqual(get('answer').textContent,'Você está vestindo azul.');
-    get('reset').emit('click');type(';<img src=x onerror=alert(1)>;');get('question').value='Teste';get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'<img src=x onerror=alert(1)>');
-    get('reset').emit('click');type(';Pendente;');get('question').value='Teste';get('ritual').emit('submit');get('language').value='en';get('language').emit('change');finish();assert.equal(get('answer').textContent,'');assert.equal(get('connection').textContent,'SESSION OPEN');
-    get('ritual').emit('submit');assert.equal(get('error').textContent,'Complete the invocation and ask a question first.');
+    get('rehearse').emit('click');assert.ok(petition.value.endsWith('Qual é a cor da minha roupa?'));get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Você está vestindo azul.');
+    get('reset').emit('click');type('Uma invocação normal');type(' Quem?');get('ritual').emit('submit');finish();assert.ok(get('answer').textContent.length>0);assert.notEqual(get('answer').textContent,'Você está vestindo azul.');
+    get('reset').emit('click');type(';<img src=x onerror=alert(1)>;');type('Teste');get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'<img src=x onerror=alert(1)>');
+    get('reset').emit('click');type(';Pendente;');type('Teste');get('ritual').emit('submit');get('language').value='en';get('language').emit('change');finish();assert.equal(get('answer').textContent,'');assert.equal(get('connection').textContent,'SESSION OPEN');
+    get('ritual').emit('submit');assert.equal(get('error').textContent,'Add your question to the message before asking Lúcifer.');
+    type(';Enter works');petition.emit('keydown',{key:'Enter'});assert.ok(petition.value.endsWith(' '));type('What works?');petition.emit('keydown',{key:'Enter'});finish();assert.equal(get('answer').textContent,'Enter works');
+    get('reset').emit('click');petition.emit('paste',{clipboardData:{getData:()=>';Pasted answer;Pasted question?'}});get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Pasted answer');
+    get('reset').emit('click');type(';No question;');get('ritual').emit('submit');assert.equal(scheduled.size,0);assert.equal(get('response').hidden,true);
+    get('reset').emit('click');petition.value=';Mobile answer;Mobile question?';petition.emit('input');assert.ok(!petition.value.includes('Mobile answer'));get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Mobile answer');
+    get('reset').emit('click');type(';Voc');petition.emit('compositionstart');petition.emit('compositionend',{data:'ê'});type(' sabe;Quem sabe?');get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Você sabe');
     get('guide-open').emit('click');assert.equal(get('guide').open,true);get('guide-close').emit('click');assert.equal(get('guide').open,false);
   }finally{Object.assign(globalThis,original);}
 });
