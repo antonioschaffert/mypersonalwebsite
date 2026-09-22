@@ -5,7 +5,7 @@ const prayer='Lucifer, please answer my question.';
 test('hidden typing never appears in the invocation; sealing reveals the intended answer',()=>{
   const game=new Invocation(prayer);game.insert(';');
   for(const char of 'My friend Rafael'){game.insert(char);assert.ok(!game.visible.includes('Rafael'));}
-  game.insert(';');assert.equal(game.visible,prayer+' ');assert.equal(game.mode,'question');assert.equal(game.result('fallback'),'My friend Rafael');
+  const before=game.visible;game.insert(';');assert.equal(game.visible,before);assert.equal(game.mode,'question');assert.equal(game.result('fallback'),'My friend Rafael');
 });
 test('normal invocation has no secret and produces a stock reply',()=>{
   const game=new Invocation(prayer);game.insert(prayer);assert.equal(game.result('The shadows remain.'),'The shadows remain.');
@@ -37,7 +37,7 @@ test('answer and invocation lengths are bounded',()=>{
 });
 
 test('a complete pasted round uses one box and retains the question after the closing delimiter',()=>{
-  const game=new Invocation(prayer);game.insert(';São Paulo;Where am I?');assert.equal(game.visible,prayer+' Where am I?');assert.equal(game.question,'Where am I?');assert.equal(game.result('fallback'),'São Paulo');
+  const game=new Invocation(prayer);game.insert(';São Paulo;Where am I?');assert.equal(game.visible,prayer.slice(0,'São Paulo'.length+1)+'Where am I?');assert.equal(game.question,'Where am I?');assert.equal(game.result('fallback'),'São Paulo');
 });
 test('question editing and semicolons do not overwrite the hidden answer',()=>{
   const game=new Invocation(prayer);game.insert(';Blue;What color; really?');const start=game.visible.indexOf('really');game.insert('today',start,start+6);assert.equal(game.question,'What color; today?');assert.equal(game.result('fallback'),'Blue');
@@ -47,4 +47,18 @@ test('select-all replacement starts a clean message, never reusing an earlier an
 });
 test('hidden capture and a completed invocation alone are not a question',()=>{
   const game=new Invocation(prayer);game.insert(';Blue');assert.equal(game.question,'');game.seal();assert.equal(game.question,'');game.insert('Who?');assert.equal(game.question,'Who?');
+});
+
+test('closing capture never autocompletes, truncates, or adds whitespace',()=>{
+  for(const text of ['Blue','A very long answer that goes beyond the entire invocation and should not be shortened']){
+    for(const close of ['semicolon','enter']){
+      const game=new Invocation(prayer);game.insert(';'+text);const before=game.visible;
+      if(close==='semicolon')game.insert(';');else game.seal();
+      assert.equal(game.visible,before);assert.equal(game.caret,before.length);assert.equal(game.question,'');
+      game.insert(' — who is here?');assert.equal(game.visible,before+' — who is here?');assert.equal(game.result('fallback'),text);
+    }
+  }
+});
+test('operator can manually finish the masked phrase before the question',()=>{
+  const game=new Invocation(prayer);game.insert(';Blue;');const rest=prayer.slice(game.visible.length);game.insert(rest+' What color?');assert.equal(game.visible,prayer+' What color?');assert.equal(game.question,'What color?');
 });

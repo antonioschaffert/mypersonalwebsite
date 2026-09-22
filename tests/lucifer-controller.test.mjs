@@ -31,7 +31,7 @@ test('real controller: typing, safe reveal, pending reset, language switch, fall
     const finish=()=>{for(const [id,fn] of [...scheduled]){scheduled.delete(id);fn();}};
     get('language').value='en';get('language').emit('change');
     for(const node of labels)assert.equal(typeof node.textContent,'string',`Missing translation ${node.dataset.i18n}`);
-    type(';A blue shirt;');assert.equal(petition.value,'Lucifer, please answer my question. ');assert.equal(petition.readOnly,false);assert.ok(!nodes.has('#question'));
+    type(';A blue shirt');const beforeClosing=petition.value;type(';');assert.equal(petition.value,beforeClosing);assert.equal(petition.readOnly,false);assert.ok(!nodes.has('#question'));
     type('What am I wearing?');get('ritual').emit('submit');assert.equal(get('summon').disabled,true);assert.ok(!get('answer').textContent.includes('blue'));
     finish();assert.equal(get('answer').textContent,'A blue shirt');
     get('reset').emit('click');assert.equal(petition.value,'');assert.equal(get('answer').textContent,'');assert.equal(get('response').hidden,true);
@@ -42,7 +42,7 @@ test('real controller: typing, safe reveal, pending reset, language switch, fall
     get('reset').emit('click');type(';<img src=x onerror=alert(1)>;');type('Teste');get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'<img src=x onerror=alert(1)>');
     get('reset').emit('click');type(';Pendente;');type('Teste');get('ritual').emit('submit');get('language').value='en';get('language').emit('change');finish();assert.equal(get('answer').textContent,'');assert.equal(get('connection').textContent,'SESSION OPEN');
     get('ritual').emit('submit');assert.equal(get('error').textContent,'Add your question to the message before asking Lúcifer.');
-    type(';Enter works');petition.emit('keydown',{key:'Enter'});assert.ok(petition.value.endsWith(' '));type('What works?');petition.emit('keydown',{key:'Enter'});finish();assert.equal(get('answer').textContent,'Enter works');
+    type(';Enter works');const beforeEnter=petition.value;petition.emit('keydown',{key:'Enter'});assert.equal(petition.value,beforeEnter);type('What works?');petition.emit('keydown',{key:'Enter'});finish();assert.equal(get('answer').textContent,'Enter works');
     get('reset').emit('click');petition.emit('paste',{clipboardData:{getData:()=>';Pasted answer;Pasted question?'}});get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Pasted answer');
     get('reset').emit('click');type(';No question;');get('ritual').emit('submit');assert.equal(scheduled.size,0);assert.equal(get('response').hidden,true);
     get('reset').emit('click');petition.value=';Mobile answer;Mobile question?';petition.emit('input');assert.ok(!petition.value.includes('Mobile answer'));get('ritual').emit('submit');finish();assert.equal(get('answer').textContent,'Mobile answer');

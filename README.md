@@ -57,7 +57,7 @@ Play at `/lucifer/`. The home page features the game and on-site search links di
 
 - English and Brazilian Portuguese, with browser-language detection and a manual selector.
 - Use the single message box: type `;your hidden answer;Your question?`. The hidden answer is masked as an invocation, then the question follows in the same field. Enter closes hidden entry; Enter again submits the completed message.
-- Backspace edits the hidden answer; pasted sequences and accented characters work. Finishing the hidden answer completes the invocation and lets you continue typing the question. The question can be edited without changing the hidden answer. Clearing the entire box also clears the secret.
+- Backspace edits the hidden answer; pasted sequences and accented characters work. Ending hidden entry never changes the visible text or adds spaces. Continue typing the rest of the invocation and your question yourself. The question can be edited without changing the hidden answer. Clearing the entire box also clears the secret.
 - An operator guide includes a practice round. Without a hidden answer, the game uses a theatrical stock response.
 - A short reveal delay, reset controls, reduced-motion support, accessible labels, and a live answer announcement.
 - Answers are kept only in the current page’s memory. No API, browser storage, cookies, or analytics receives questions or answers. Reset, language changes, and leaving the page clear the round.

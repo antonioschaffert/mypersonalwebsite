@@ -4,10 +4,12 @@ export const MAX_PETITION = 400;
 // One visible message; the answer exists only in this round's memory.
 export class Invocation {
   constructor(prayer) { this.prayer = prayer; this.reset(); }
-  reset() { this.visible = ''; this.answer = ''; this.prefix = ''; this.mode = 'normal'; this.caret = 0; }
+  reset() { this.visible = ''; this.answer = ''; this.prefix = ''; this.mode = 'normal'; this.caret = 0; this.questionOffset = 0; }
   get question() {
     if (this.mode === 'secret') return '';
-    return (this.visible.startsWith(this.prayer) ? this.visible.slice(this.prayer.length) : this.visible).trim();
+    const invocationEnd = this.visible.startsWith(this.prayer) ? this.prayer.length : 0;
+    const start = Math.max(invocationEnd, this.mode === 'question' ? this.questionOffset : 0);
+    return this.visible.slice(start).trim();
   }
   mask() {
     const length = Math.min(this.prefix.length + this.answer.length + 1, MAX_PETITION);
@@ -17,7 +19,7 @@ export class Invocation {
   }
   seal() {
     if (this.mode === 'secret') {
-      this.mode = 'question'; this.visible = `${this.prayer} `; this.caret = this.visible.length;
+      this.mode = 'question'; this.questionOffset = this.visible.length; this.caret = this.visible.length;
     }
   }
   insert(text, start = this.visible.length, end = start) {
@@ -31,6 +33,10 @@ export class Invocation {
         if (this.answer.length + char.length <= MAX_ANSWER) this.answer += char;
         this.mask();
       } else {
+        if (this.mode === 'question' && start < this.questionOffset) {
+          this.questionOffset -= Math.min(end, this.questionOffset) - start;
+          this.questionOffset += char.length;
+        }
         this.visible = (this.visible.slice(0, start) + char + this.visible.slice(end)).slice(0, MAX_PETITION);
         start = Math.min(start + char.length, this.visible.length); end = start; this.caret = start;
       }
@@ -47,6 +53,7 @@ export class Invocation {
       if (forward) end += Array.from(this.visible.slice(end))[0]?.length ?? 0;
       else start -= Array.from(this.visible.slice(0, start)).at(-1)?.length ?? 0;
     }
+    if (this.mode === 'question') this.questionOffset -= Math.max(0, Math.min(end, this.questionOffset) - Math.min(start, this.questionOffset));
     this.visible = this.visible.slice(0, start) + this.visible.slice(end); this.caret = start;
     if (!this.visible) this.reset();
   }

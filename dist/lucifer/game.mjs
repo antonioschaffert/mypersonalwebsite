@@ -17,7 +17,7 @@ const messages = {
     guideIntro:'Read this before inviting your audience. The operator supplies the answer; the invocation hides what they type.',
     instruction1:'Start a new session. In the message box, type a semicolon (;) to begin your hidden answer.',
     instruction2:'Type the answer you want Lúcifer to give. Your audience sees the invocation appear instead. Backspace corrects your hidden answer.',
-    instruction3:'Type another semicolon (;) or press Enter to finish the hidden answer. The invocation completes. Keep typing your question in the same box.',
+    instruction3:'Type another semicolon (;) or press Enter to finish the hidden answer. The text stays exactly where it is. Continue the invocation and question yourself in the same box.',
     instruction4:'Choose “Ask Lúcifer.” After a short pause, your answer appears. “New session” clears everything for the next round.',
     exampleTitle:'TRY THIS',exampleAnswer:'You are wearing blue.',exampleQuestion:'Type the whole example in one box. The answer is hidden; the question stays visible.',
     practiceQuestion:'What color am I wearing?',
@@ -43,7 +43,7 @@ const messages = {
     guideIntro:'Leia antes de chamar a plateia. O operador fornece a resposta; a invocação esconde o que ele digita.',
     instruction1:'Comece uma nova sessão. Na caixa de mensagem, digite ponto e vírgula (;) para iniciar a resposta oculta.',
     instruction2:'Digite a resposta que você quer que Lúcifer dê. A plateia vê a invocação aparecer no lugar dela. Use Backspace para corrigir a resposta oculta.',
-    instruction3:'Digite outro ponto e vírgula (;) ou pressione Enter para encerrar a resposta oculta. A invocação se completa. Continue digitando a pergunta na mesma caixa.',
+    instruction3:'Digite outro ponto e vírgula (;) ou pressione Enter para encerrar a resposta oculta. O texto fica exatamente onde parou. Continue a invocação e a pergunta na mesma caixa, sem preenchimento automático.',
     instruction4:'Escolha “Perguntar a Lúcifer”. Após uma breve pausa, a sua resposta aparece. “Nova sessão” apaga tudo para a próxima rodada.',
     exampleTitle:'EXPERIMENTE',exampleAnswer:'Você está vestindo azul.',exampleQuestion:'Digite o exemplo inteiro em uma só caixa. A resposta fica oculta; a pergunta aparece.',
     practiceQuestion:'Qual é a cor da minha roupa?',
@@ -71,6 +71,12 @@ function clearRound(focus=true){
   $('#connection').textContent=t('connection');$('#error').textContent='';
   if(focus)petition.focus();
 }
+function practiceText(){
+  const sample=new Invocation(t('prayer'));
+  sample.insert(`;${t('exampleAnswer')};`);
+  const continuation=t('prayer').startsWith(sample.visible)?t('prayer').slice(sample.visible.length):'';
+  return `;${t('exampleAnswer')};${continuation} ${t('practiceQuestion')}`;
+}
 function setLanguage(next){
   locale=next in messages?next:'en';language.value=locale;model=new Invocation(t('prayer'));
   document.documentElement.lang=locale;
@@ -78,7 +84,7 @@ function setLanguage(next){
   document.querySelectorAll('[data-i18n]').forEach(node=>node.textContent=t(node.dataset.i18n));
   petition.placeholder=`${t('prayer')} ${t('questionPlaceholder')}`;
   $('#guide-close').setAttribute('aria-label',t('closeGuide'));
-  $('#example-code').textContent=`;${t('exampleAnswer')};${t('practiceQuestion')}`;
+  $('#example-code').textContent=practiceText();
   clearRound(false);
 }
 function insert(text,start=petition.selectionStart,end=petition.selectionEnd){
@@ -154,7 +160,7 @@ $('#guide-close').addEventListener('click',()=>guide.close());
 guide.addEventListener('close',()=>document.body.classList.remove('guide-open'));
 guide.addEventListener('click',event=>{if(event.target===guide){const r=guide.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)guide.close();}});
 $('#rehearse').addEventListener('click',()=>{
-  clearRound(false);model.insert(`;${t('exampleAnswer')};${t('practiceQuestion')}`);sync();guide.close();summon.focus();
+  clearRound(false);model.insert(practiceText());sync();guide.close();summon.focus();
 });
 window.addEventListener('pagehide',()=>clearRound(false));
 setLanguage(navigator.language?.toLowerCase().startsWith('pt')?'pt-BR':'en');
